@@ -1,0 +1,56 @@
+name: DNA Sequence Tool
+description: Functions to manipulate DNA sequences
+host: EXCEL
+api_set: {}
+script:
+  content: |
+    /**
+     * Revemoves all white spaces.
+     * @customfunction
+     * @param {string} value
+     * @returns All white spaces removed.
+     */
+    function replace_all_WhiteSpace(value) {
+      return value.replace(/ /g, "");
+    }
+    /**
+     * Converts text to reverse order.
+     * @customfunction
+     * @param {string} value
+     * @returns All white spaces removed.
+     */
+    function reverse_sequence(value: string) {
+      return replace_all_WhiteSpace(value).split("").reverse().join("");
+    }
+    /**
+     * Converts the sequence to complement base.
+     * @customfunction
+     * @param {string} value
+     * @returns All white spaces removed.
+     */
+    function complement(value) {
+      var data = replace_all_WhiteSpace(value);
+      var BASE_COMPLEMENT = { A: "T", T: "A", C: "G", G: "C" };
+      return data
+        .toUpperCase()
+        .split("")
+        .map((it) => {
+          return BASE_COMPLEMENT[it];
+        })
+        .join("");
+    }
+
+    /**
+     * Calculates the reverse complement sequence.
+     * @customfunction
+     * @param {string} value
+     * @returns reverse complement sequence
+     */
+    function reverse_complement(value) {
+      return complement(reverse_sequence(value));
+    }
+  language: typescript
+libraries: |
+  https://appsforoffice.microsoft.com/lib/1/hosted/office.js
+  @types/office-js
+  core-js@2.4.1/client/core.min.js
